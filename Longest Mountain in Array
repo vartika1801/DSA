@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int longestMountain(vector<int>& arr) {
+        if (arr.size()<3) return 0;
+        int n=arr.size();
+        int ans=0;
+        for(int i=1;i<n-1;i++){
+            if (arr[i]>arr[i-1] && arr[i]>arr[i+1]){
+                int l=i,r=i;
+                while(l>0 && arr[l]>arr[l-1]) l--;
+                while(r<n-1 && arr[r]>arr[r+1]) r++;
+                ans=max(ans,r-l+1);
+            }
+        }
+        return ans;
+        // int n = arr.size();
+        // int maxLen = 0;
+        // for(int i=0;i<n;i++){
+        //     for(int j=i+2;j<n;j++){       // subarray length at least 3
+        //         bool increasing = true;
+        //         bool decreasing = false;
+        //         int k=i;
+        //         // check increasing part
+        //         while(k<j && arr[k]<arr[k+1]) k++;
+        //         if(k==i) continue;        // no increase
+        //         // check decreasing part
+        //         while(k<j && arr[k]>arr[k+1]){
+        //             k++;
+        //             decreasing = true;
+        //         }
+        //         if(decreasing && k==j)
+        //             maxLen = max(maxLen, j-i+1);
+        //     }
+        // }
+        // return maxLen;
+    }
+};
