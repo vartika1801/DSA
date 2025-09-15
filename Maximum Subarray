@@ -1,0 +1,35 @@
+int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int m = n/2;
+        if (n==1) return nums[0];
+        vector<int> leftarr(nums.begin(),nums.begin()+m);
+        vector<int> rightarr(nums.begin()+m,nums.end());
+        int leftmax = maxSubArray(leftarr);
+        int rightmax = maxSubArray(rightarr);
+        int leftsum=INT_MIN; int rightsum = INT_MIN;
+        int s=0;
+        for(int i=m-1;i>=0;i--){
+            s+=nums[i];
+            leftsum= max(leftsum,s);
+        }
+        s=0;
+        for(int i=m;i<n;i++){
+            s+=nums[i];
+            rightsum= max(rightsum,s);
+        }
+        int cross = leftsum+rightsum;
+        return max(cross, max(leftmax,rightmax));
+    }
+
+
+------------ Kadane's Algorithm -------------
+
+long long sum = 0; 
+        long long maxi = INT_MIN;
+        int n = nums.size();
+        for (int i=0;i<n;i++){
+            sum+=nums[i];
+            maxi=max(maxi,sum);
+            if (sum<0) sum=0;
+        }
+        return maxi;
