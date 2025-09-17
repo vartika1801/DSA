@@ -1,0 +1,57 @@
+class Solution {
+// private:
+//     bool check(string s, int k){
+//         unordered_map<char, int> mpp;
+//         for (char i : s){
+//             if (mpp.find(i)!=mpp.end()) mpp[i]++;
+//             else{
+//                 mpp[i]=1;
+//             }
+//         }
+//         for (auto& i: mpp){
+//             if (i.second<k) return false;
+//         }
+//         return true;
+//     }
+public:
+    int longestSubstring(string s, int k) {
+        // int n = s.length();
+        // int res=0;
+        // for (int i=0;i<n;i++){
+        //     string p="";
+        //     for(int j=i;j<n;j++){
+        //         p+=s[j];
+        //         if (check(p,k)) res=max(res,j-i+1);
+        //     }
+        // }
+        // return res;
+        int n = s.length();
+        int res = 0;
+        for (int target=1;target<=26;target++){
+            vector<int> freq(26,0);
+            int l=0, r=0;
+            int unique = 0;
+            int leastK = 0;
+            while (r<n){
+                if (unique<=target){
+                    int idx = s[r]-'a';
+                    if (freq[idx]==0) unique++;
+                    freq[idx]++;
+                    if (freq[idx]==k) leastK++;
+                    r++;}
+                else{
+                    int idx=s[l]-'a';
+                    if (freq[idx]==k) leastK--;
+                    freq[idx]--;
+                    if (freq[idx]==0) unique--;
+                    l++;
+                }
+                if (unique==target && leastK==target){
+                    res= max(res, r-l);
+                }
+            }
+        }
+        return res;
+
+    }
+};
