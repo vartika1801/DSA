@@ -1,0 +1,18 @@
+string shiftingLetters(string s, vector<int>& shifts) {
+        // brute force 
+        // int n = shifts.size();
+        // int start = 0;
+        // for(int i=0;i<n;i++){
+        //     int shift = shifts[i];
+        //     for(int j=start;j<i+1;j++){
+        //         s[j]='a'+(s[j]-'a'+shift)%26;
+        //     }
+        // }
+        // return s;
+        int n = shifts.size();
+        long long  summ =0;
+        for (int i=n-1;i>=0;i--){
+            summ+=shifts[i];
+            s[i]='a'+(s[i]-'a'+summ)%26;
+        }
+        return s;
