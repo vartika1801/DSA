@@ -1,0 +1,32 @@
+int equalSubstring(string s, string t, int maxCost) {
+        int n = s.length();
+        int sum=0;
+        int maxlen = 0 ;
+        int l=0, r=0;
+        while (r<n){
+            sum+=abs(s[r]-t[r]);
+            if (sum<=maxCost){
+                maxlen = max(maxlen,r-l+1);
+            }
+            if (sum>maxCost){
+                sum-=abs(s[l]-t[l]);
+                l++;
+            }
+            r++;
+        }
+        return maxlen;
+
+        // brute force
+        // int n = s.length(); int maxlen=0;
+        // for (int l=0;l<n;l++){
+        //     for(int r=l;r<n;r++){
+        //         int sum=0;
+        //         for (int k=l;k<=r;k++){
+        //             sum+=abs(s[k]-t[k]);
+        //         }
+        //         if (sum<=maxCost){
+        //             maxlen=max(maxlen,r-l+1);
+        //         }
+        //     }
+        // }
+        // return maxlen;
