@@ -1,0 +1,28 @@
+private:
+    bool solve(vector<int>& nums, int idx, int n, vector<int>& dp){
+        if (idx==n-1) return true;
+        if(dp[idx]!=-1) return dp[idx];
+        for (int i=1;i<=nums[idx];i++){
+            if (solve(nums,idx+i,n, dp)==true) return dp[idx] = true;
+        }
+        return dp[idx] = false;
+    }
+public:
+    bool canJump(vector<int>& nums) {
+        vector<int> dp(nums.size(),-1);
+        return solve(nums,0, nums.size(), dp);
+    }
+};
+
+
+/// Most Optimal :
+bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        int maxindex = 0;
+        for (int i=0;i<n;i++){
+            if (i>maxindex) return false;
+            maxindex = max(maxindex, i+nums[i]);
+        }
+        return true;
+    }
+
