@@ -1,0 +1,61 @@
+// Brute Force  -------
+private:
+    int path(vector<int>& coins, int amount, int ind){
+        if (ind==0){
+            if (amount%coins[0]==0){
+                return amount/coins[0];
+            }else{
+                return INT_MAX;
+            }
+        }
+        long long notpick = 0 + path(coins,amount,ind-1);
+        long long pick = INT_MAX;
+        if (coins[ind]<=amount){
+            pick = 1 + path(coins,amount-coins[ind],ind);
+        }
+        return min(pick,notpick);
+    }
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int ans = path(coins, amount, coins.size()-1);
+        if (amount ==0) return 0;
+        return ans!=INT_MAX ? ans : -1;
+    }
+};
+
+
+// Memoization -----
+private:
+    int path(vector<int>& coins, int amount, int ind, vector<vector<int>>& dp){
+        if (ind==0){
+            if (amount%coins[0]==0){
+                return amount/coins[0];
+            }else{
+                return 1e8;
+            }
+        }
+        if (dp[ind][amount]!=1e7) return dp[ind][amount];
+        long long notpick = 0 + path(coins,amount,ind-1,dp);
+        long long pick = 1e8;
+        if (coins[ind]<=amount){
+            pick = 1 + path(coins,amount-coins[ind],ind,dp);
+        }
+        return dp[ind][amount]= min(pick,notpick);
+    }
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        vector<vector<int>> dp(coins.size(), vector<int>(amount+1, 1e7));
+        int ans = path(coins, amount, coins.size()-1, dp);
+        if (amount ==0) return 0;
+        return ans!=1e8 ? ans : -1;
+    }
+};
+
+// Optimal ----
+    dp=[amount+1]*(amount+1)
+        dp[0]=0
+        for a in range(1,amount+1):
+            for c in coins:
+                if a-c >=0 :
+                    dp[a] = min(dp[a],1+dp[a-c])
+        return dp[amount] if dp[amount]!= amount+1 else -1
