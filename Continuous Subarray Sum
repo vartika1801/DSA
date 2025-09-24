@@ -1,0 +1,35 @@
+// Brute force - O(n*n)
+bool checkSubarraySum(vector<int>& nums, int k) {
+        int n = nums.size();
+        for(int i=0;i<n;i++){
+            int sum = 0; int count=0;
+            for (int j=i;j<n;j++){
+                sum+=nums[j];
+                count++;
+                if (count>=2 && sum%k==0) return true;
+            }
+        }
+        return false;
+
+// Optimal - O(n)
+int findMaxLength(vector<int>& nums) {
+        unordered_map<int, int> mp;
+        int n = nums.size();
+        int maxlen = 0;
+        int currsum = 0;
+        mp[currsum]=-1;
+        for(int i=0;i<n;i++){
+            if (nums[i]==0){
+                currsum+=(-1);
+            }else{
+                currsum+=1;
+            }
+            if (mp.find(currsum)!=mp.end()){
+                maxlen = max(maxlen,i-mp[currsum]);
+            }
+            if (mp.find(currsum)==mp.end()){
+                mp[currsum]=i;
+            }
+        }
+        return maxlen;
+    }
