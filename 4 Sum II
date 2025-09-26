@@ -31,3 +31,22 @@ int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vec
         }
         return count;
        }
+
+// O(n^2)
+int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+        unordered_map<int, int> mpp;
+        for (int i=0;i<nums3.size();i++){
+            for (int j=0;j<nums4.size();j++){
+                long long val = nums3[i]+nums4[j];
+                mpp[val]++;
+            }
+        }
+        int count = 0;
+        for(int i=0;i<nums1.size();i++){
+            for(int j=0;j<nums2.size();j++){
+                    int total = nums1[i]+nums2[j];
+                    if (mpp.find(-1*total)!=mpp.end()) count+=mpp[-total];
+                }
+            }
+        return count;
+    }
