@@ -25,3 +25,36 @@ public:
         return false;
     }
 };
+
+
+// Optimal - O(n*m)
+bool isItPossible(string word1, string word2) {
+        vector<int> cnt1(26,0), cnt2(26,0);
+        for(char c : word1) cnt1[c-'a']++;
+        for(char c : word2) cnt2[c-'a']++;
+        int d1 = count_if(cnt1.begin(),cnt1.end(),[](int x){return x>0;});
+        int d2 = count_if(cnt2.begin(),cnt2.end(),[](int x){return x>0;});
+        for(int i=0;i<26;i++){
+            if (cnt1[i]==0) continue;
+            for(int j=0;j<26;j++){
+                if (cnt2[j]==0) continue;
+                int newd1 =d1, newd2=d2;
+                // Now Swap
+                if (--cnt1[i]==0) newd1--;
+                if (++cnt1[j]==1) newd1++;
+
+                if (--cnt2[j]==0) newd2--;
+                if (++cnt2[i]==1) newd2++;
+
+                if (newd1==newd2) return true;
+
+                // Undo the changes 
+                if (--cnt1[j]==0) newd1--;
+                if (++cnt1[i]==1) newd1++;
+
+                if (--cnt2[i]==0) newd2--;
+                if (++cnt2[j]==1) newd2++;
+            }
+        }
+        return false;
+    }
