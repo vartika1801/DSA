@@ -1,0 +1,27 @@
+// Brute Force - O(n*m*(n+m))
+private:
+    bool check(string word1, string word2, int i, int j){
+        unordered_map<char, int> mp1;
+        unordered_map<char, int> mp2;
+        // swap them 
+        char temp = word1[i];
+        word1[i]=word2[j];
+        word2[j]=temp;
+        for (char c: word1){
+            mp1[c]++;
+        }
+        for (char c: word2){
+            mp2[c]++;
+        }
+        return (int)mp1.size()==(int)mp2.size();
+    }
+public:
+    bool isItPossible(string word1, string word2) {
+        for (int i=0;i<word1.size();i++){
+            for(int j=0;j<word2.size();j++){
+                if (check(word1,word2,i,j)) return true;
+            }
+        }
+        return false;
+    }
+};
