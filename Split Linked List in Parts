@@ -1,0 +1,27 @@
+vector<ListNode*> splitListToParts(ListNode* head, int k) {
+        vector<ListNode*> res(k,nullptr);
+        int n =0;
+        ListNode* temp = head;
+        while(temp){
+            n++;
+            temp=temp->next;
+        }
+        int size = n/k;
+        int extra = n%k;
+        temp = head;
+        for(int i=0;i<n && temp;i++){
+            res[i]=temp;
+            int partsize = size + (extra > 0 ? 1: 0);
+            extra--;
+            for(int j=1;j<partsize;j++){
+                if (temp) temp=temp->next;
+            }
+            if (temp){
+                ListNode *next = temp->next;
+                temp->next=nullptr;
+                temp = next;
+            }
+        }
+        return res;
+
+    }
