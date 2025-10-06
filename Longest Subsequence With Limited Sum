@@ -1,3 +1,4 @@
+------ Brute Force ----------
 vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
         vector<int> ans(queries.size(),0);
         sort(nums.begin(), nums.end());
@@ -12,6 +13,36 @@ vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
                 }
             }
             ans[i]=count;
+        }
+        return ans;
+    }
+
+
+
+------ Optimal ---------
+vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
+        vector<int> ans(queries.size(),0);
+        sort(nums.begin(), nums.end());
+        int n = nums.size(), m = queries.size();
+        vector<int> prefix(nums.size());
+        prefix[0]=nums[0];
+        for(int i=1;i<nums.size();i++){
+            prefix[i]=prefix[i-1]+nums[i];
+        }
+        for(int i=0;i<queries.size();i++){
+            if (queries[i]<prefix[0]){
+                ans[i]=0;
+                continue;
+            }
+            int l=0, h=n;
+            while(l<h){
+                int mid = (l+h)/2;
+                if (prefix[mid]<=queries[i]) l=mid+1;
+                else{
+                    h=mid;
+                }
+            }
+            ans[i]=l;
         }
         return ans;
     }
